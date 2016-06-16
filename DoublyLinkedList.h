@@ -55,16 +55,18 @@ public:
 	void push_front(const Type & data){
 		DoubleNode<Type> *NewNode = new DoubleNode<Type>(data,nullptr,nullptr);
 		if(listsz == 0){
+			cout << " this was entered" << endl;
 			headptr = NewNode;
 			NewNode->next = nullptr;
 			tailptr = NewNode;
-			++listsz;
 		}
 		else{
+			cout << listsz << endl;
 			NewNode->next = headptr;
 			headptr = NewNode;
 			headptr->next->prev = NewNode;
 		}
+		++listsz;
 		NewNode->prev = nullptr;
 	}
 	void push_back(Type const & data){
@@ -73,13 +75,13 @@ public:
 		tailptr = NewNode;
 		NewNode->prev = nullptr;
 		headptr = NewNode;
-			++listsz;
 		}
 		else{
 			NewNode->prev = tailptr;
 			tailptr = NewNode;
 			tailptr->prev->next = NewNode;
 		}
+		++listsz;
 		NewNode->next = nullptr;
 	}
 	void pop_front(){
@@ -97,11 +99,14 @@ public:
 			tmpnode->prev = nullptr;
 			delete headptr;
 			headptr = tmpnode;
+			--listsz;
 		}
+		if (this->empty()) throw underflow_error("Removed last element in list");
 		DoublyLinkedList::printLst();
 	}
 	void printLst()const{
         DoubleNode<Type> *ptr = headptr;
+        cout << "Items to be printed " << listsz << endl;
         cout << "Printing from Heads Perspective" << endl;
         while(ptr != nullptr){
             cout << "Node[" << ptr->ID <<"]=" << ptr->data << "-->";
@@ -118,39 +123,42 @@ public:
         cout << "end" << endl;
     }
 	int erase(Type const & data){
+		if(headptr == nullptr) throw underflow_error("Stack is empty");
 		DoubleNode<Type> *ptr = headptr;
-        DoubleNode<Type> *prev = headptr;
+        DoubleNode<Type> *lnkptr = headptr;
         int del = 0;
-        while(ptr->next != nullptr){
-            if(ptr->data == data){
-                if(ptr==headptr){
-                headptr->next->prev = nullptr;
-                delete headptr;
-                 headptr = ptr->next;
-                ++del;
-                --listsz;
-                }
-                else{
-                    prev->next=ptr->next;
-                    ptr->next->prev=prev;
-                    ptr = prev;
-                    ++del;
-                    --listsz;
-                }
-            }
-            prev = ptr;
-            ptr = ptr->next;
-        }
-        if (ptr->next == nullptr)
-        {
-        	if(ptr->data == data){
-        	cout << "This is working" << endl;
-        	ptr->prev->next = nullptr;
-        	delete tailptr;
-        	tailptr = ptr->prev;
+        int count = 0;
+        while(ptr->data != data){
+        	ptr = ptr->next;
+        	count++;
+        	if (count > listsz){
+        		cout << "Value is not in List" << endl;
+        		return del;
         	}
         }
-        DoublyLinkedList::printLst();
+            if(headptr == tailptr){
+                cout << listsz << endl;
+                ++del;
+                cout << listsz << endl;
+                cout << "Deleted " << del << " nodes." << endl;
+            	pop_front();
+            	return del;   
+            }else if(ptr == headptr){
+                ++del;
+                cout << "Deleted " << del << " nodes." << endl;
+            	pop_front();
+            	return del;    
+            }else{
+            	while(lnkptr->next != ptr){
+            	lnkptr = lnkptr->next;
+            	}
+                lnkptr->next = ptr->next;
+                ptr->next->prev = lnkptr;
+                delete ptr;
+            }
+        ++del;
+        --listsz;
         return cout << "Deleted " << del << " node/s." << endl;
+        DoublyLinkedList::printLst();
 	}
 };

@@ -85,7 +85,7 @@ int main(){
         						cout << endl;
         					}
         					else{	
-        					cout << "Printing out " << lis.count(lis.size()) << " nodes." <<endl;
+        					//cout << "Printing out " << lis.count(lis.size()) << " nodes." <<endl;
             				lis.printLst();
             				}
             		}
@@ -175,7 +175,7 @@ int main(){
         						cout << endl;
         					}
         					else{	
-        					cout << "Printing out " << lst.count(lst.size()) << " nodes." <<endl;
+        				//	cout << "Printing out " << lst.count(lst.size()) << " nodes." <<endl;
             				lst.printLst();
             				}
             		}
@@ -204,6 +204,38 @@ int main(){
     		}
     	}
     }
+/*    CyclicLinkedList<double> lis;
+    cin >> val;
+    lis.push_front(val);
+                        try{
+                        lis.pop_front();
+                    }
+                    catch (const exception & e){
+                        cout << "error-->" << e.what() << endl;
+                        }
+    cin >> val;
+    lis.push_front(val);
+    cin >> val;
+                    try{
+                        lis.erase(val);
+                    }
+                    catch (const exception & e){
+                        cout << "error-->" << e.what() << endl;
+                        }
+    cin >> val;
+    lis.push_back(val);
+    cin >> val;
+    lis.push_front(val);
+    cin >> val;
+    lis.push_front(val);
+    cin >> val;
+    lis.push_back(val);
+    cin >> val;
+    lis.push_back(val);
+    lis.printLst();
+    lis.pop_front();
+    cin >> val;
+    lis.erase(val);*/
 	return 0;
 }
 
